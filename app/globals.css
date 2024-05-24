@@ -2,6 +2,10 @@
   @tailwind components;
   @tailwind utilities;
 
+@import url('../app/_styles/navigation.css');
+@import url('../app/_styles/board.css');
+@import url('../app/_styles/panel.css');
+
   @layer base {
     :root {
       --background: 0 0% 100%;

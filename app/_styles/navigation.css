@@ -1,0 +1,7 @@
+
+.main-navigation{
+    @apply py-4 px-4 border-border border-b flex items-center gap-2 justify-between;
+    .logo{
+        @apply font-bold 
+    }
+}

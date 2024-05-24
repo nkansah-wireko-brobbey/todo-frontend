@@ -1,0 +1,3 @@
+.board{
+    @apply w-full border-border flex gap-4
+}
