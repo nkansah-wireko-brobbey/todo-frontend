@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Plus } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { openDrawer } from '@/store/reducers/drawer.reducer';
-
+import Todo from './Todo';
 
 export default () => {
 
@@ -24,6 +24,9 @@ export default () => {
 
             </div>
 
+        </div>
+        <div className="content">
+          <Todo />
         </div>
 
     </div>

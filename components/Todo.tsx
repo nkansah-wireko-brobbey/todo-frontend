@@ -6,20 +6,23 @@ import {
     CardHeader,
     CardTitle,
   } from "@/components/ui/card"
+  import { Badge } from "@/components/ui/badge"
+
+
   
 const Todo = () => {
   return (
     <div>
         <Card>
-  <CardHeader>
-    <CardTitle>Card Title</CardTitle>
-    <CardDescription>Card Description</CardDescription>
+  <CardHeader className="text-sm p-2">
+    <CardTitle className="text-sm"><Badge variant="secondary" className="bg-green-200 text-green-700">Badge</Badge>
+</CardTitle>
   </CardHeader>
-  <CardContent>
-    <p>Card Content</p>
+  <CardContent className="text-sm p-2">
+    <p>Card Content Card Content</p>
   </CardContent>
-  <CardFooter>
-    <p>Card Footer</p>
+  <CardFooter className="text-sm p-2">
+    
   </CardFooter>
 </Card>
 
