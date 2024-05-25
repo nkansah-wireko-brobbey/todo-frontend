@@ -3,20 +3,29 @@ import React from 'react'
 import { Button } from "@/components/ui/button"
 import { Plus } from 'lucide-react';
 import { useDispatch } from 'react-redux';
-import { openDrawer } from '@/store/reducers/drawer.reducer';
+import { openDrawer } from '@/store/reducers/drawer.slice';
 import Todo from './Todo';
+import { useAppSelector } from '@/lib/hooks/reduxStore.hooks'
 
-export default () => {
+type Props = {
+  title: string;
+  id: number,
+  todos?: any[]
+}
+
+export default ({title, id, todos}: Props) => {
 
     const dispatch = useDispatch();
 
     const openDrawerHandler = () => {
         dispatch(openDrawer());
     }
+
+
   return (
     <div className='panel'>
         <div className="title">
-            <div>In Progress</div>
+            <div>{title}</div>
             <div>
             <Button variant="ghost" size="icon" className='rounded-full h-7 w-7'
             onClick={openDrawerHandler}
@@ -26,7 +35,11 @@ export default () => {
 
         </div>
         <div className="content">
-          <Todo />
+          {
+            todos?.map((todo: any) => {
+              return <Todo key={todo.id} data={todo} />
+            })
+          }
         </div>
 
     </div>
