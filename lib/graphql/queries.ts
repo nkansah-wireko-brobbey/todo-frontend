@@ -22,3 +22,45 @@ export const GET_CATEGORIES = gql`
     }
     }
 `
+export const GET_PANELS = gql`
+    query GetPanels {
+        panel {
+        name
+        id
+        todos {
+            title
+            id
+            created_at
+            category{
+                id
+                name
+            }
+        }
+        }
+    }
+`
+export const GET_PANELS_SUBS = gql`
+    query GetPanels {
+    panel {
+        name
+        id
+        todos {
+            title
+            id
+            created_at
+            category{
+                id
+                name
+            }
+        }
+  }
+    }
+`
+// export const GET_PANELS_SUBS = gql`
+//     query GetPanels {
+//     panel {
+//         name
+//         id
+//     }
+//     }
+// `
