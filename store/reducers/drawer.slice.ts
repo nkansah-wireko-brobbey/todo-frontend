@@ -8,6 +8,7 @@ const drawerSlice = createSlice({
     componentName: null,
     componentTitle: null,
     componentDescription: null,
+    panel_id: null,
 
   },
   reducers: {
@@ -16,12 +17,14 @@ const drawerSlice = createSlice({
       state.componentName = action.payload.componentName;
       state.componentTitle = action.payload.componentTitle;
       state.componentDescription = action.payload.componentDescription;
+      state.panel_id = action.payload.panel_id;
     },
     closeDrawer(state) {
       state.isDrawerOpen = false;
       state.componentName = null;
       state.componentTitle = null;
       state.componentDescription = null;
+      panel_id: null;
     },
   },
 });
