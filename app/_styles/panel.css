@@ -5,6 +5,6 @@
         @apply flex justify-between items-center text-sm font-light h-[10px] py-4 px-2
     }
     .content{
-        @apply p-2
+        @apply p-2 space-y-4
     }
 }

@@ -9,6 +9,12 @@ import { BoardLoading } from './Loading'
 import { useDispatch } from 'react-redux'
 import { fetchPanels } from '@/store/reducers/panel.slice'
 import { useAppDispatch, useAppSelector } from '@/lib/hooks/reduxStore.hooks'
+import { Badge } from "@/components/ui/badge"
+import { openDrawer } from '@/store/reducers/drawer.slice';
+import { CATEGORY_FORM } from './AddTodoFormCategory';
+import { fetchCategories } from '@/store/reducers/category.slice'
+
+
 
 const Board = () => {
   const { loading, error, data } = useQuery(GET_CATEGORIES);
@@ -23,13 +29,15 @@ const Board = () => {
   console.log(panels)
 
   useEffect(() => {  
-      dispatch(fetchPanels())    
+      dispatch(fetchPanels())  
+      dispatch(fetchCategories())  
   }, [])
 
 
 
   return (
     <>
+    <BoardMenu />
     {loading && <BoardLoading/>}
 
 
@@ -41,12 +49,28 @@ const Board = () => {
             })
           }
           
-        </div><AddTodoDrawer /></>
+        </div></>
     
     }
+    <AddTodoDrawer />
     </>
 
   )
 }
+
+
+export const BoardMenu = () => {
+
+  const dispatch = useDispatch();
+  const openCategoryForm = () => {
+      dispatch(openDrawer({componentName: CATEGORY_FORM, componentTitle: 'Add Categories', componentDescription: 'Wanna add a special tag to your todo?', panelId: null}));
+  }
+  return (
+    <div className='float-end mb-5'>
+<Badge variant="outline" className='rounded-md cursor-pointer' onClick={openCategoryForm}>Add Category</Badge>
+    </div>
+  )
+}
+
 
 export default Board
