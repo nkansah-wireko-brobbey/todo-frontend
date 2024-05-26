@@ -12,6 +12,8 @@ const inter = Inter({ subsets: ["latin"] });
 import client from '@/lib/apolloClient.config';
 
 import { ApolloProvider } from '@apollo/client';
+import { Toaster } from "@/components/ui/toaster"
+
 
 // export const metadata: Metadata = {
 //   title: "Create Next App",
@@ -32,6 +34,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <TopNav />
         {children}
+        <Toaster />
         </body>
     </html>
     </ApolloProvider>
