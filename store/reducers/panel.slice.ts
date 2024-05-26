@@ -42,6 +42,8 @@ const panelSlice = createSlice({
       .addCase(fetchPanels.fulfilled, (state, action) => {
         state.data = action.payload;
         state.loading = false;
+        console.log(action);
+        console.log(action.payload);
       })
       .addCase(fetchPanels.rejected, (state, action) => {
         state.loading = false;
