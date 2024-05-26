@@ -38,3 +38,19 @@ mutation createTodos($title: String!, $user_id: Int!, $category_id: Int!, $panel
   }
 }
 `;
+export const ARCHIVE_TODO = gql`
+mutation deleteTodos($id: Int!) {
+    update_todos(where: {id: {_eq: $id}}, _set: {is_archived: true}) {
+    returning {
+      id
+    }
+  }
+}
+`;
+export const DELETE_TODO = gql`
+mutation deleteTodos($id: Int!) {
+  delete_todos_by_pk(id: $id) {
+    id
+  }
+}
+`;
