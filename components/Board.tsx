@@ -7,7 +7,7 @@ import { useQuery } from '@apollo/client'
 import { GET_TODOS, GET_CATEGORIES } from '@/lib/graphql/queries'
 import { BoardLoading } from './Loading'
 import { useDispatch } from 'react-redux'
-import { fetchPanels } from '@/store/reducers/panel.slice'
+import { fetchPanels, subscribeToPanels } from '@/store/reducers/panel.slice'
 import { useAppDispatch, useAppSelector } from '@/lib/hooks/reduxStore.hooks'
 import { Badge } from "@/components/ui/badge"
 import { openDrawer } from '@/store/reducers/drawer.slice';
@@ -32,6 +32,7 @@ const Board = () => {
   useEffect(() => {  
       dispatch(fetchPanels())  
       dispatch(fetchCategories())  
+      dispatch(subscribeToPanels())
   }, [])
 
 

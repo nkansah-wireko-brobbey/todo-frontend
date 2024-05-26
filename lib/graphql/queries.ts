@@ -39,8 +39,8 @@ export const GET_PANELS = gql`
         }
     }
 `
-export const GET_PANELS_SUBS = gql`
-    query GetPanels {
+export const GET_PANELS_SUBSCRIPTION = gql`
+    subscription GetPanels {
     panel {
         name
         id

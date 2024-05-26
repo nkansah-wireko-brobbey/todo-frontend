@@ -1,7 +1,7 @@
 // Drawer Store Slice
 import { createSlice } from '@reduxjs/toolkit';
 import client from '@/lib/apolloClient.config';
-import { GET_PANELS } from '@/lib/graphql/queries';
+import { GET_PANELS, GET_PANELS_SUBSCRIPTION } from '@/lib/graphql/queries';
 
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
@@ -30,6 +30,9 @@ const panelSlice = createSlice({
     error: false
   },
   reducers: {
+    setPanel(state, action){
+      state.data = action.payload;
+    }
 
   },
 
@@ -52,5 +55,22 @@ const panelSlice = createSlice({
       });
   },
 });
+
+export const subscribeToPanels=()=>(dispatch:any)=>{
+
+  client.subscribe({
+    query: GET_PANELS_SUBSCRIPTION,
+  }).subscribe({
+    next(response){
+      const updatedPanel = response.data.panel;
+      dispatch(setPanel(updatedPanel))
+    },
+    error(err){
+      console.error("Panel Subs error",err)
+    }
+  })
+}
+
+export const { setPanel } = panelSlice.actions;
 
 export default panelSlice.reducer;
