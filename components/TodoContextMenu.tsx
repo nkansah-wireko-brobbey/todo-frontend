@@ -20,7 +20,7 @@ import { fetchPanels } from "@/store/reducers/panel.slice"
 import { useAppDispatch } from "@/lib/hooks/reduxStore.hooks"
 import { useAppSelector } from "@/lib/hooks/reduxStore.hooks"  
 import { useMutation } from "@apollo/client"
-import { DELETE_TODO } from "@/lib/graphql/mutations"
+import { DELETE_TODO, UPDATE_TODO_CATEGORY, UPDATE_TODO_PANEL } from "@/lib/graphql/mutations"
 import client from '@/lib/apolloClient.config'
 
 type Props ={
@@ -61,6 +61,46 @@ const TodoContextMenu = ({todos_id}:Props) => {
                 console.log("Finally")
             }
         }
+      const updateTodoPanelHandler = async (panel_id:number) => {
+            try {
+                console.log("Variable: ", todos_id)
+                const { data } = await client.mutate({
+                    mutation: UPDATE_TODO_PANEL,
+                    variables: {
+                      id: todos_id,
+                        panel_id: panel_id
+                    },
+                  });
+ 
+                console.log("Data", data)
+            }
+            catch (error) {
+                console.log("Error", error)
+            }
+            finally {
+                console.log("Finally")
+            }
+        }
+      const updateTodoCategoryHandler = async (category_id:number) => {
+            try {
+                console.log("Variable: ", todos_id)
+                const { data } = await client.mutate({
+                    mutation: UPDATE_TODO_CATEGORY,
+                    variables: {
+                      id: todos_id,
+                      category_id: category_id
+                    },
+                  });
+ 
+                console.log("Data", data)
+            }
+            catch (error) {
+                console.log("Error", error)
+            }
+            finally {
+                console.log("Finally")
+            }
+        }
 
 
   return (
@@ -76,7 +116,9 @@ const TodoContextMenu = ({todos_id}:Props) => {
       <DropdownMenuSeparator />
       {     panels &&
             panels.map((panel) => {
-                return <DropdownMenuItem key={panel.id}>{panel.name}</DropdownMenuItem>
+                return <DropdownMenuItem key={panel.id} onClick={()=>{
+                    updateTodoPanelHandler(panel.id)
+                }}>{panel.name}</DropdownMenuItem>
             })
       }
       <DropdownMenuSub>
@@ -87,7 +129,12 @@ const TodoContextMenu = ({todos_id}:Props) => {
               <DropdownMenuSubContent>
               { categories &&
             categories.map((category) => {
-                return <DropdownMenuItem key={category.id}>{category.name}</DropdownMenuItem>
+                return <DropdownMenuItem key={category.id} onClick={
+                    ()=>{
+                        updateTodoCategoryHandler(category.id)
+                    }
+                
+                }>{category.name}</DropdownMenuItem>
             })
             }
               </DropdownMenuSubContent>
