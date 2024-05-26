@@ -8,3 +8,16 @@ mutation createCategory($name: String!, $user_id: Int!) {
   }
 }
 `;
+export const CREATE_TODO = gql`
+mutation createTodos($title: String!, $user_id: Int!, $category_id: Int!, $panel_id: Int!) {
+    insert_todos_one(object :{title: $title, user_id: $user_id, category_id: $category_id, panel_id: $panel_id}) {
+        title
+            id
+            created_at
+            category{
+                id
+                name
+            }
+  }
+}
+`;
