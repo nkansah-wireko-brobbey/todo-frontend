@@ -6,6 +6,8 @@ import { useDispatch } from 'react-redux';
 import { openDrawer } from '@/store/reducers/drawer.slice';
 import Todo from './Todo';
 import { useAppSelector } from '@/lib/hooks/reduxStore.hooks'
+import { TODO_FORM } from './AddTodoForm';
+
 
 type Props = {
   title: string;
@@ -16,9 +18,8 @@ type Props = {
 export default ({title, id, todos}: Props) => {
 
     const dispatch = useDispatch();
-
     const openDrawerHandler = () => {
-        dispatch(openDrawer());
+        dispatch(openDrawer({componentName: TODO_FORM, componentTitle: 'Add Todo', componentDescription: 'Add a new todo', panel_id: id}));
     }
 
 
