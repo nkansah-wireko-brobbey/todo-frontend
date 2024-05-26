@@ -32,6 +32,7 @@ import { useAppSelector } from "@/lib/hooks/reduxStore.hooks";
 
 import { AddTodoForm, TODO_FORM } from './AddTodoForm'
 import { CATEGORY_FORM, AddTodoFormCategory } from "./AddTodoFormCategory";
+import AddTodoFormPanel, { PANEL_FORM } from "./AddTodoFormPanel";
 
 
 
@@ -69,6 +70,7 @@ const AddTodoDrawer = ({title, description, FormComponent}:Props) => {
             </DialogHeader>
             { (componentName === TODO_FORM) && <AddTodoForm panel_id={panel_id}/>}
             {(componentName === CATEGORY_FORM) && <AddTodoFormCategory />}
+            {(componentName === PANEL_FORM) && <AddTodoFormPanel />}
 
             <DialogFooter className="sm:justify-start">
           <DialogClose asChild>
@@ -92,6 +94,7 @@ const AddTodoDrawer = ({title, description, FormComponent}:Props) => {
     </DrawerHeader>
     {(componentName === TODO_FORM) && <AddTodoForm panel_id={panel_id} />}
     {(componentName === CATEGORY_FORM) && <AddTodoFormCategory />}
+    {(componentName === PANEL_FORM) && <AddTodoFormPanel />}
     <DrawerFooter>
       <DrawerClose>
         <Button variant="outline" onClick={closeDrawerHandler}>Cancel</Button>

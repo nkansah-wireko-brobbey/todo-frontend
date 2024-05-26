@@ -13,6 +13,7 @@ import { Badge } from "@/components/ui/badge"
 import { openDrawer } from '@/store/reducers/drawer.slice';
 import { CATEGORY_FORM } from './AddTodoFormCategory';
 import { fetchCategories } from '@/store/reducers/category.slice'
+import { PANEL_FORM } from './AddTodoFormPanel'
 
 
 
@@ -65,9 +66,13 @@ export const BoardMenu = () => {
   const openCategoryForm = () => {
       dispatch(openDrawer({componentName: CATEGORY_FORM, componentTitle: 'Add Categories', componentDescription: 'Wanna add a special tag to your todo?', panelId: null}));
   }
+  const openPanelForm = () => {
+      dispatch(openDrawer({componentName: PANEL_FORM, componentTitle: 'Add Panels', componentDescription: 'Wanna customize your panels?', panelId: null}));
+  }
   return (
-    <div className='float-end mb-5'>
+    <div className='flex gap-3 float-end mb-5'>
 <Badge variant="outline" className='rounded-md cursor-pointer' onClick={openCategoryForm}>Add Category</Badge>
+<Badge variant="outline" className='rounded-md cursor-pointer' onClick={openPanelForm}>Add Panel</Badge>
     </div>
   )
 }
