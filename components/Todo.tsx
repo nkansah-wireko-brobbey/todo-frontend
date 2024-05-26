@@ -7,6 +7,7 @@ import {
     CardTitle,
   } from "@/components/ui/card"
   import { Badge } from "@/components/ui/badge"
+  import TodoContextMenu from "@/components/TodoContextMenu"
 
 interface TodoData{
     title: string;
@@ -29,7 +30,10 @@ const Todo = ({data}: Props) => {
         <Card>
   <CardHeader className="text-sm p-2">
     <CardTitle className="text-sm">
-      <Badge variant="secondary" className="bg-green-200 text-green-700">{data.category?.name || "Not Assigned"}</Badge>
+      <Badge variant="secondary" className="bg-green-200 text-green-700 float-start">{data.category?.name || "Not Assigned"}</Badge>
+      <div className="float-end">
+      <TodoContextMenu todos_id={data.id} />
+      </div>
 </CardTitle>
   </CardHeader>
   <CardContent className="text-sm p-2">
