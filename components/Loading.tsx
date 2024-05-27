@@ -5,12 +5,12 @@ import { Skeleton } from "@/components/ui/skeleton"
 export const BoardLoading = () => {
   return (
     <div>
-        <div className="board flex justify-between">
+        <div className="board justify-between flex-wrap">
         <CardLoading />
         <CardLoading />
         <CardLoading />
         <CardLoading />
-    </div>
+        </div>
     </div>
   )
 }
@@ -30,7 +30,8 @@ const CardLoading = () => {
           <Skeleton className="h-4 w-[200px]" />
         </div>
   
-          </div></div>
+          </div>
+        </div>
     )
     }
 
