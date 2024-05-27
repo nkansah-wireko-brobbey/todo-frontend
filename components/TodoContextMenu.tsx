@@ -22,22 +22,26 @@ import { useAppSelector } from "@/lib/hooks/reduxStore.hooks"
 import { useMutation } from "@apollo/client"
 import { DELETE_TODO, UPDATE_TODO_CATEGORY, UPDATE_TODO_PANEL } from "@/lib/graphql/mutations"
 import client from '@/lib/apolloClient.config'
+import { useFetchCategories } from "@/lib/hooks/useFetchCategories.hook"
 
-type Props ={
+type Props = {
     todos_id: number
 }
 
-const TodoContextMenu = ({todos_id}:Props) => {
+export function TodoContextMenu ({todos_id}:Props){
     const dispatch = useAppDispatch();
+
     useEffect(() => {
         dispatch(fetchCategories())
         dispatch(fetchPanels())  
+        console.log("Context Menu: Loaded")
+      },[])
 
-      }
-      ,[])
+      const categories = useFetchCategories();
 
-      let {data:categories} = useAppSelector((state) => state.categories);
       let panels: any[] = useAppSelector((state) => state.panels.data);
+
+
 
       const [mutateFunction, { loading, error, data }] = useMutation(DELETE_TODO);
 
@@ -105,7 +109,7 @@ const TodoContextMenu = ({todos_id}:Props) => {
 
   return (
     <div><DropdownMenu>
-    <DropdownMenuTrigger><div>
+    <DropdownMenuTrigger asChild><div>
             <Button variant="ghost" size="icon" className='rounded-full h-7 w-7'
             onClick={() => {console.log('clicked')}}
             ><Ellipsis size={12}/></Button>
