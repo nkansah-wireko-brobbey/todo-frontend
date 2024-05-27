@@ -1,7 +1,7 @@
 // Drawer Store Slice
 import { createSlice } from '@reduxjs/toolkit';
 import client from '@/lib/apolloClient.config';
-import { GET_CATEGORIES } from '@/lib/graphql/queries';
+import { GET_CATEGORIES, GET_CATEGORIES_SUBSCRIPTION } from '@/lib/graphql/queries';
 
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
@@ -30,7 +30,9 @@ const categorySlice = createSlice({
     error: false
   },
   reducers: {
-
+    setCategory(state, action){
+      state.data = action.payload;
+    }
   },
 
   extraReducers: (builder) => {
@@ -53,5 +55,20 @@ const categorySlice = createSlice({
       });
   },
 });
+export const subscribeToCategories=()=>(dispatch:any)=>{
+
+  client.subscribe({
+    query: GET_CATEGORIES_SUBSCRIPTION,
+  }).subscribe({
+    next(response){
+      const updatedPanel = response.data.panel;
+      dispatch(setCategory(updatedPanel))
+    },
+    error(err){
+      console.error("Category Subs error",err)
+    }
+  })
+}
+export const { setCategory } = categorySlice.actions;
 
 export default categorySlice.reducer;
