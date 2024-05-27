@@ -8,6 +8,10 @@ import {
   } from "@/components/ui/card"
   import { Badge } from "@/components/ui/badge"
   import TodoContextMenu from "@/components/TodoContextMenu"
+  import color from "@/lib/colors"
+import { useEffect, useState } from "react";
+import colors from "@/lib/colors";
+import { getColor } from "@/lib/colors";
 
 interface TodoData{
     title: string;
@@ -15,6 +19,7 @@ interface TodoData{
     date: Date;
     category: {
         name?: string;
+        color_id?: number;
     }
 }
 
@@ -25,12 +30,17 @@ type Props = {
 const Todo = ({data}: Props) => {
 
   console.log("Todo data",data)
+  const [color, setColor] = useState(colors[4]) // default color [gray]
+  useEffect(()=>{
+    setColor(getColor(data.category?.color_id))
+  },[])
+
   return (
     <div>
         <Card>
   <CardHeader className="text-sm p-2">
     <CardTitle className="text-sm">
-      <Badge variant="secondary" className="bg-green-200 text-green-700 float-start">{data.category?.name || "Not Assigned"}</Badge>
+      <Badge variant="secondary" className={`bg-green-200 text-green-700 float-start`}>{data.category?.name || "Not Assigned"}</Badge>
       <div className="float-end">
       <TodoContextMenu todos_id={data.id} />
       </div>
