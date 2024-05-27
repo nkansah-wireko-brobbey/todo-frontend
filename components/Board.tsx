@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from '@/lib/hooks/reduxStore.hooks'
 import { Badge } from "@/components/ui/badge"
 import { openDrawer } from '@/store/reducers/drawer.slice';
 import { CATEGORY_FORM } from './AddTodoFormCategory';
-import { fetchCategories } from '@/store/reducers/category.slice'
+import { fetchCategories, subscribeToCategories } from '@/store/reducers/category.slice'
 import { PANEL_FORM } from './AddTodoFormPanel'
 
 
@@ -33,6 +33,7 @@ const Board = () => {
       dispatch(fetchPanels())  
       dispatch(fetchCategories())  
       dispatch(subscribeToPanels())
+      dispatch(subscribeToCategories())
   }, [])
 
 
@@ -42,18 +43,22 @@ const Board = () => {
     <BoardMenu />
     {loading && <BoardLoading/>}
 
+    {/* <div className='board-wrapper'> */}
 
     {!loading && data &&
-    <><div className='board'>
+    <div>
+      <div className='board'>
           {
             panels.map((panel: any) => {
               return <Panel key={panel.id} title={panel.name} id={panel.id} todos={panel.todos} />
             })
           }
           
-        </div></>
+        </div>
+    </div>
     
-    }
+  }
+
     <AddTodoDrawer />
     </>
 
@@ -71,9 +76,12 @@ export const BoardMenu = () => {
       dispatch(openDrawer({componentName: PANEL_FORM, componentTitle: 'Add Panels', componentDescription: 'Wanna customize your panels?', panelId: null}));
   }
   return (
+    <div>
+
     <div className='flex gap-3 float-end mb-5'>
 <Badge variant="outline" className='rounded-md cursor-pointer' onClick={openCategoryForm}>Add Category</Badge>
 <Badge variant="outline" className='rounded-md cursor-pointer' onClick={openPanelForm}>Add Panel</Badge>
+    </div>
     </div>
   )
 }
