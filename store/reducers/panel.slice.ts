@@ -16,8 +16,12 @@ export const fetchPanels = createAsyncThunk(
         query: GET_PANELS,
       });
       return response.data.panel;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+    } catch (error:any) {
+      return thunkAPI.rejectWithValue({
+        message: error.message,
+        networkError: error.networkError,
+        graphQLErrors: error.graphQLErrors
+      });
     }
   }
 );
