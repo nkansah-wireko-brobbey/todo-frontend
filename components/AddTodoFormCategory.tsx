@@ -4,6 +4,7 @@
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { Badge } from "@/components/ui/badge"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -15,6 +16,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+
+
 import { Input } from "@/components/ui/input"
 import { useAppSelector } from "@/lib/hooks/reduxStore.hooks"
 import { useMutation } from "@apollo/client"
@@ -23,6 +28,7 @@ import client from '@/lib/apolloClient.config'
 import { closeDrawer } from "@/store/reducers/drawer.slice"
 import { useAppDispatch } from "@/lib/hooks/reduxStore.hooks"
 import { useToast } from "./ui/use-toast"
+import colors from "@/lib/colors"
 
 
 export const CATEGORY_FORM = "CATEGORY_FORM";
@@ -34,6 +40,9 @@ const formSchema = z.object({
   name: z.string().min(2,{
     message: "a simple tag to your todo?",
   }).max(10),
+  color: z.string().min(1,{
+    message: "select a color for your category",
+  }),
 })
 
 export function AddTodoFormCategory() {
@@ -55,17 +64,20 @@ export function AddTodoFormCategory() {
       resolver: zodResolver(formSchema),
       defaultValues: {
         name: "",
+        color: "",
       },
     })
 
       // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {    
     try {
+      console.log("Values",values)
       const { data } = await client.mutate({
         mutation: CREATE_CATEGORY,
         variables: {
           name: values.name,
           user_id: user_id,
+          color_id: parseInt(values.color)
         },
       });
       console.log("Category Added", data);
@@ -92,10 +104,36 @@ export function AddTodoFormCategory() {
             <FormItem>
               <FormLabel>Category Name</FormLabel>
               <FormControl>
-                <Input placeholder="title" {...field} />
+                <Input placeholder="name" {...field} />
               </FormControl>
              
               <FormMessage />
+            </FormItem>
+          )}
+        />
+           <FormField
+          control={form.control}
+          name="color"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Color</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a color" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                {colors && 
+                colors.map((color:any) => {
+       return <SelectItem key={color.id} value={color.id.toString()}>
+          <div className="flex-row justify-between items-center"><div className="float-start mr-10">{color.name}</div>
+          <div className={` inline-flex rounded-full px-2 p-y-2 h-5 w-5 text-xs ${color.color} float-end`}></div>
+          </div>
+        </SelectItem>
+          })}
+                </SelectContent>
+              </Select>
             </FormItem>
           )}
         />
