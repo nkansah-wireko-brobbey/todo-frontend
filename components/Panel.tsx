@@ -24,6 +24,8 @@ export default ({title, id, todos}: Props) => {
 
 
   return (
+    <div>
+
     <div className='panel'>
         <div className="title">
             <div>{title}</div>
@@ -43,6 +45,7 @@ export default ({title, id, todos}: Props) => {
           }
         </div>
 
+    </div>
     </div>
   )
 }
