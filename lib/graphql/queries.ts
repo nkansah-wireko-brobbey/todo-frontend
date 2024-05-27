@@ -9,6 +9,7 @@ export const GET_TODOS = gql`
         id
             category{
                 name
+                color_id
             }
     }
     }
@@ -19,6 +20,7 @@ export const GET_CATEGORIES = gql`
     category {
         name
         id
+        color_id
     }
     }
 `
@@ -34,6 +36,7 @@ export const GET_PANELS = gql`
             category{
                 id
                 name
+                color_id
             }
         }
         }
@@ -51,9 +54,19 @@ export const GET_PANELS_SUBSCRIPTION = gql`
             category{
                 id
                 name
+                color_id
             }
         }
   }
+    }
+`
+export const GET_CATEGORIES_SUBSCRIPTION = gql`
+    subscription GetCategories {
+    category {
+        name
+        id
+        color_id
+    }
     }
 `
 // export const GET_PANELS_SUBS = gql`
