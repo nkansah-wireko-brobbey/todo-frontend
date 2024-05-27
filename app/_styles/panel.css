@@ -1,8 +1,8 @@
 .panel{
-    @apply w-1/4 border border-dashed rounded-lg;
-
+    @apply w-[350px] max-w-[100%] flex-1 border border-dashed rounded-lg;
+   
     .title{
-        @apply flex justify-between items-center text-sm font-light h-[10px] py-4 px-2
+        @apply flex justify-between items-center text-sm font-light h-[10px] py-4 px-2;
     }
     .content{
         @apply p-2 space-y-4
