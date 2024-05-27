@@ -12,7 +12,7 @@ const Account = () => {
   return (
     <div className="cursor-pointer">
         <DropdownMenu>
-  <DropdownMenuTrigger>
+  <DropdownMenuTrigger asChild>
 
         <Avatar className="h-8 w-8">
             <AvatarImage src="https://github.com/shadcn.png" />
