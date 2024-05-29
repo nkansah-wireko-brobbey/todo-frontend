@@ -4,15 +4,15 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 export const BoardLoading = () => {
   return (
-    <div>
-        <div className="board justify-between flex-wrap">
+    <div className="w-[calc(100vw)]">
+      <div className="board justify-between flex-wrap w-full">
         <CardLoading />
         <CardLoading />
         <CardLoading />
         <CardLoading />
-        </div>
+      </div>
     </div>
-  )
+  );
 }
 export const PanelLoading = () => {
   return (

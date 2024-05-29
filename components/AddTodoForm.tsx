@@ -56,7 +56,7 @@ export function AddTodoForm({panel_id}:Props) {
   const dispatch = useAppDispatch();
    
   useEffect(() => {
-    dispatch(fetchCategories())
+
   }
   ,[])
 
