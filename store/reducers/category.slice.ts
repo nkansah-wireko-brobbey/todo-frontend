@@ -32,6 +32,7 @@ const categorySlice = createSlice({
   reducers: {
     setCategory(state, action){
       state.data = action.payload;
+      console.log("Category Subs sets :",action.payload)
     }
   },
 
@@ -61,10 +62,12 @@ export const subscribeToCategories=()=>(dispatch:any)=>{
     query: GET_CATEGORIES_SUBSCRIPTION,
   }).subscribe({
     next(response){
-      const updatedPanel = response.data.panel;
-      dispatch(setCategory(updatedPanel))
+      const updatedCategory = response.data.category;
+      dispatch(setCategory(updatedCategory))
+      console.log("Category Subs:",response)
     },
-    error(err){
+    error(err) {
+      console.error("Category Subs error message: ",err.message)
       console.error("Category Subs error",err)
     }
   })

@@ -1,43 +1,40 @@
 // Drawer Store Slice
-import { createSlice } from '@reduxjs/toolkit';
-import client from '@/lib/apolloClient.config';
-import { GET_PANELS, GET_PANELS_SUBSCRIPTION } from '@/lib/graphql/queries';
+import { createSlice } from "@reduxjs/toolkit";
+import client from "@/lib/apolloClient.config";
+import { GET_PANELS, GET_PANELS_SUBSCRIPTION } from "@/lib/graphql/queries";
 
-import { createAsyncThunk } from '@reduxjs/toolkit';
-
-
-
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchPanels = createAsyncThunk(
-  'panels/fetchPanels',
+  "panels/fetchPanels",
   async (_, thunkAPI) => {
     try {
       const response = await client.query({
         query: GET_PANELS,
       });
       return response.data.panel;
-    } catch (error:any) {
+    } catch (error: any) {
       return thunkAPI.rejectWithValue({
         message: error.message,
         networkError: error.networkError,
-        graphQLErrors: error.graphQLErrors
+        graphQLErrors: error.graphQLErrors,
       });
     }
   }
 );
 
 const panelSlice = createSlice({
-  name: 'panels',
+  name: "panels",
   initialState: {
     data: [] as any[],
     loading: true,
-    error: false
+    error: false,
   },
   reducers: {
-    setPanel(state, action){
+    setPanel(state, action) {
       state.data = action.payload;
-    }
-
+      console.log("Panel Subs sets :", action.payload);
+    },
   },
 
   extraReducers: (builder) => {
@@ -60,20 +57,22 @@ const panelSlice = createSlice({
   },
 });
 
-export const subscribeToPanels=()=>(dispatch:any)=>{
-
-  client.subscribe({
-    query: GET_PANELS_SUBSCRIPTION,
-  }).subscribe({
-    next(response){
-      const updatedPanel = response.data.panel;
-      dispatch(setPanel(updatedPanel))
-    },
-    error(err){
-      console.error("Panel Subs error",err)
-    }
-  })
-}
+export const subscribeToPanels = () => (dispatch: any) => {
+  client
+    .subscribe({
+      query: GET_PANELS_SUBSCRIPTION,
+    })
+    .subscribe({
+      next(response) {
+        const updatedPanel = response.data.panel;
+        dispatch(setPanel(updatedPanel));
+        console.log("Panel Subs:", response);
+      },
+      error(err) {
+        console.error("Panel Subs error", err);
+      },
+    });
+};
 
 export const { setPanel } = panelSlice.actions;
 

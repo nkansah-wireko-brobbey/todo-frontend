@@ -43,23 +43,23 @@ export const GET_PANELS = gql`
     }
 `
 export const GET_PANELS_SUBSCRIPTION = gql`
-    subscription GetPanels {
+  subscription GetPanels {
     panel {
-        name
+      name
+      id
+      todos {
+        title
         id
-        todos {
-            title
-            id
-            created_at
-            category{
-                id
-                name
-                color_id
-            }
+        created_at
+        category {
+          id
+          name
+          color_id
         }
-  }
+      }
     }
-`
+  }
+`;
 export const GET_CATEGORIES_SUBSCRIPTION = gql`
     subscription GetCategories {
     category {
