@@ -107,7 +107,7 @@ const TodoDrawer = ({ open, onClose, title, description, children }: Props) => {
         </DrawerHeader>
         {children}
         <DrawerFooter>
-          <DrawerClose>
+          <DrawerClose asChild>
             <Button variant="outline" onClick={onClose}>
               Cancel
             </Button>

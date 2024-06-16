@@ -1,9 +1,9 @@
 .board{
-    @apply w-full border-border flex gap-4 
+    @apply border-border flex gap-4 mt-[8rem]
     /* @apply flex overflow-x-auto p-4; */
 
 }
 
 .board-wrapper{
-    @apply w-full h-screen overflow-auto
+    @apply w-full h-screen overflow-x-auto
 }

@@ -46,7 +46,9 @@ const formSchema = z.object({
 })
 
 export function AddTodoFormCategory() {
-  const {toast} = useToast();
+  const [addCategory, { data, error }] = useMutation(CREATE_CATEGORY);
+  const { toast } = useToast();
+  
 
   function showToast (title?:string,description?:string) {
     toast({
@@ -72,14 +74,15 @@ export function AddTodoFormCategory() {
   async function onSubmit(values: z.infer<typeof formSchema>) {    
     try {
       console.log("Values",values)
-      const { data } = await client.mutate({
-        mutation: CREATE_CATEGORY,
+
+      await addCategory({
         variables: {
           name: values.name,
           user_id: user_id,
-          color_id: parseInt(values.color)
-        },
+          color_id: parseInt(values.color),
+        }
       });
+      
       console.log("Category Added", data);
       showToast("Category Added","You have successfully added a new category")
       

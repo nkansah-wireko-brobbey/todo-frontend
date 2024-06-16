@@ -31,11 +31,17 @@ const Board = () => {
 
   useEffect(() => {
     if (panels.length === 0) {
+      console.log("Fetching panels and categories, length is ", panels.length)
       dispatch(fetchPanels());
       dispatch(fetchCategories());
-      dispatch(subscribeToPanels());
-      dispatch(subscribeToCategories());
     }
+    
+    
+  }, [dispatch, panels.length]);
+
+  useEffect(() => {
+    dispatch(subscribeToPanels());
+    dispatch(subscribeToCategories());
   }, [dispatch]);
 
   return (

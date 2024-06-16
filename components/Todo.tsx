@@ -57,7 +57,7 @@ const Todo = ({ data }: Props) => {
           <p> {data.title}</p>
         </CardContent>
         <CardFooter className="text-sm p-2">
-          Token: {userId}
+          {/* Token: {userId} */}
         </CardFooter>
       </Card>
     </div>

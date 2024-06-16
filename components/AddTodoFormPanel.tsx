@@ -37,6 +37,8 @@ const formSchema = z.object({
 export function AddTodoFormPanel() {
   const { toast } = useToast();
 
+  const [addPanel, { data, error }] = useMutation(CREATE_PANEL);
+
   function showToast(title?: string, description?: string) {
     toast({
       title: title || "Uh oh! Something went wrong.",
@@ -59,13 +61,22 @@ export function AddTodoFormPanel() {
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const { data } = await client.mutate({
-        mutation: CREATE_PANEL,
+      // const { data } = await client.mutate({
+      //   mutation: CREATE_PANEL,
+      //   variables: {
+      //     name: values.name,
+      //     user_id: user_id,
+      //   },
+      // });
+
+      await addPanel({
         variables: {
           name: values.name,
           user_id: user_id,
-        },
+        }
       });
+
+
       console.log("Panel Added", data);
       showToast("Panel Added", "You have successfully added a new panel");
     } catch (error) {

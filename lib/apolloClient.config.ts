@@ -1,3 +1,5 @@
+"use client"
+
 import {
   ApolloClient,
   InMemoryCache,
@@ -11,7 +13,8 @@ import { split, HttpLink } from "@apollo/client";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { createClient } from "graphql-ws";
-import { useAuth } from "@clerk/nextjs";
+import { useSession } from "@clerk/nextjs";
+
 
 // const {getToken} = useAuth();
 
@@ -25,6 +28,11 @@ const wsLink = new GraphQLWsLink(
     url: "ws://localhost:8080/v1/graphql",
     connectionParams: async () => {
       // const token = await getToken({ template: "hasura" });
+      // const session = useSession();
+      // const token = session ? session.session : null;
+
+      console.log("Token: ", token);
+
       return {
         headers: {
           Authorization: token ? `Bearer ${token}` : "",
@@ -38,7 +46,7 @@ const wsLink = new GraphQLWsLink(
 );
 
 // const authLink = setContext(async (_, {headers})=>{
-//   const token = await getToken({template: "hasura"});
+//   nst token = await getToken({template: "hasura"});
 //   return {
 //     headers:{
 //       ...headers,

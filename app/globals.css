@@ -5,6 +5,7 @@
 @import url('../app/_styles/navigation.css');
 @import url('../app/_styles/board.css');
 @import url('../app/_styles/panel.css');
+@import url('../app/_styles/common.css');
 
   @layer base {
     :root {

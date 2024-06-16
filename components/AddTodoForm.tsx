@@ -1,11 +1,10 @@
+"use client";
 
-"use client"
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -14,7 +13,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
+} from "@/components/ui/form";
 
 import {
   Select,
@@ -22,91 +21,86 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 
-import { Input } from "@/components/ui/input"
-import { useAppSelector } from "@/lib/hooks/reduxStore.hooks"
-import { useEffect } from "react"
-import { fetchCategories } from "@/store/reducers/category.slice"
-import { useAppDispatch } from "@/lib/hooks/reduxStore.hooks"
-import { CREATE_TODO } from "@/lib/graphql/mutations"
-import client from '@/lib/apolloClient.config'
-import { closeDrawer } from "@/store/reducers/drawer.slice"
-import { useToast } from "./ui/use-toast"
-
-
-
+import { Input } from "@/components/ui/input";
+import { useAppSelector } from "@/lib/hooks/reduxStore.hooks";
+import { useEffect } from "react";
+import { fetchCategories } from "@/store/reducers/category.slice";
+import { useAppDispatch } from "@/lib/hooks/reduxStore.hooks";
+import { CREATE_TODO } from "@/lib/graphql/mutations";
+import client from "@/lib/apolloClient.config";
+import { closeDrawer } from "@/store/reducers/drawer.slice";
+import { useToast } from "./ui/use-toast";
+import { useMutation } from "@apollo/client";
 
 export const TODO_FORM = "add-todo-form";
 
 type Props = {
   panel_id: number;
-}
+};
 
 const formSchema = z.object({
-  title: z.string().min(2,{
-    message: "Enter the title of the todo",
-  }).max(50),
-  category: z.string().min(1,{
+  title: z
+    .string()
+    .min(2, {
+      message: "Enter the title of the todo",
+    })
+    .max(50),
+  category: z.string().min(1, {
     message: "Select a category",
   }),
-})
+});
 
-export function AddTodoForm({panel_id}:Props) {
+export function AddTodoForm({ panel_id }: Props) {
   const dispatch = useAppDispatch();
-   
-  useEffect(() => {
 
-  }
-  ,[])
+  const [addTodo, { data, error }] = useMutation(CREATE_TODO);
 
-  let {data:categories} = useAppSelector((state) => state.categories);
-  let {user_id} = useAppSelector((state) => state.user);
+  let { data: categories } = useAppSelector((state) => state.categories);
+  let { user_id } = useAppSelector((state) => state.user);
 
-  const {toast} = useToast();
+  const { toast } = useToast();
 
-  function showToast (title?:string,description?:string) {
+  function showToast(title?: string, description?: string) {
     toast({
-      title: title ||"Uh oh! Something went wrong.",
+      title: title || "Uh oh! Something went wrong.",
       description: description || "There was a problem with your request.",
-    })
-  }
-
-
-    const form = useForm<z.infer<typeof formSchema>>({
-      resolver: zodResolver(formSchema),
-      defaultValues: {
-        title: "",
-        category: "",
-      },
-    })
-
- async function onSubmit(values: z.infer<typeof formSchema>) {
-
-  try {
-    const { data } = await client.mutate({
-      mutation: CREATE_TODO,
-      variables: {
-        title: values.title,
-        user_id: user_id,
-        category_id: parseInt(values.category),
-        panel_id: panel_id,
-      },
     });
-    console.log("Todo Added", data);
-    showToast("Todo Added","You have successfully added a new todo item")
-    
-    
-  } catch (error) {
-    console.error("Error creating todo item:", error);
-    showToast("Error creating todo item","There was a problem creating a new todo item")
-  } finally{
-    
-    dispatch(closeDrawer())
-
   }
 
-    console.log(values, panel_id, user_id, parseInt(values.category))
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: "",
+      category: "",
+    },
+  });
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+
+      await addTodo({
+        variables: {
+          title: values.title,
+          user_id: user_id,
+          category_id: parseInt(values.category),
+          panel_id: panel_id,
+        },
+      });
+      console.log("Todo Added", data);
+      showToast("Todo Added", "You have successfully added a new todo item");
+    } catch (error) {
+      console.error("Error creating todo item:", error);
+      showToast(
+        "Error creating todo item",
+        "There was a problem creating a new todo item"
+      );
+    } finally {
+      dispatch(closeDrawer());
+    }
+
+    console.log(values, panel_id, user_id, parseInt(values.category));
   }
   return (
     <Form {...form}>
@@ -120,7 +114,7 @@ export function AddTodoForm({panel_id}:Props) {
               <FormControl>
                 <Input placeholder="title" {...field} />
               </FormControl>
-             
+
               <FormMessage />
             </FormItem>
           )}
@@ -138,11 +132,17 @@ export function AddTodoForm({panel_id}:Props) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                { categories &&
-                  categories.map((category:any) => {
-                    return <SelectItem key={category.id} value={category.id.toString()}>{category.name}</SelectItem>
-                  })
-                }
+                  {categories &&
+                    categories.map((category: any) => {
+                      return (
+                        <SelectItem
+                          key={category.id}
+                          value={category.id.toString()}
+                        >
+                          {category.name}
+                        </SelectItem>
+                      );
+                    })}
                 </SelectContent>
               </Select>
             </FormItem>
@@ -151,8 +151,7 @@ export function AddTodoForm({panel_id}:Props) {
         <Button type="submit">Submit</Button>
       </form>
     </Form>
-  )
+  );
 }
 
-
-export default AddTodoForm
+export default AddTodoForm;

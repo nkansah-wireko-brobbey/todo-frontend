@@ -1,6 +1,9 @@
 
 .main-navigation{
-    @apply py-4 px-4 border-border border-b flex items-center gap-2 justify-between;
+    @apply py-4 px-4 border-border border-b flex items-center gap-2 justify-between fixed top-0 w-full z-50;
+
+    backdrop-filter: blur(10px); /* Adjust the blur amount */
+    -webkit-backdrop-filter: blur(10px);
     .logo{
         @apply font-bold 
     }

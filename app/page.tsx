@@ -1,16 +1,16 @@
 import Image from "next/image";
 import Board from "../components/Board";
+import Welcome from "../components/Welcome";
 
 export default function Home() {
+  // const result = 
   return (
-    <main className="flex min-h-screen flex-col px-6">
-      <h1 className="font-bold mt-6 text-xl mb-6">Welcome, <span className="font-extralight">
-      Wireko-Brobbey</span> </h1>
+    <main className="flex flex-col px-6 mt-16 w-fit">
+      <Welcome />
 
       <div>
         <Board />
       </div>
-     
     </main>
   );
 }

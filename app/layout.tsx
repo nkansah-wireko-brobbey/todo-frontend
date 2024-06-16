@@ -1,13 +1,12 @@
-'use client'
+"use client";
 import {
   ClerkProvider,
   SignInButton,
   SignedIn,
   SignedOut,
-  UserButton
-} from '@clerk/nextjs'
+  UserButton,
+} from "@clerk/nextjs";
 
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Provider } from "react-redux";
@@ -17,11 +16,12 @@ import TopNav from "../components/TopNav";
 
 const inter = Inter({ subsets: ["latin"] });
 
-import client from '@/lib/apolloClient.config';
+import client from "@/lib/apolloClient.config";
 
-import { ApolloProvider } from '@apollo/client';
-import { Toaster } from "@/components/ui/toaster"
+import { ApolloProvider } from "@apollo/client";
+import { Toaster } from "@/components/ui/toaster";
 
+import MyApolloProvider from "@/components/apolloProvider";
 
 // export const metadata: Metadata = {
 //   title: "Create Next App",
@@ -34,20 +34,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider >
-    <Provider store={store}>
+    <ClerkProvider>
+      <Provider store={store}>
+        {/* <MyApolloProvider><></></MyApolloProvider> */}
+        {/* <ApolloProvider client={client}> */}
+        <MyApolloProvider>
 
-    <ApolloProvider client={client}>
-    <html lang="en">
-
-      <body className={inter.className}>
-        <TopNav />
-        {children}
-        <Toaster />
-        </body>
-    </html>
-    </ApolloProvider>
-    </Provider>
+        <html lang="en">
+          <body className={inter.className}>
+            <TopNav />
+            {children}
+            <Toaster />
+          </body>
+        </html>
+        </MyApolloProvider>
+        {/* </ApolloProvider> */}
+      </Provider>
     </ClerkProvider>
   );
 }
